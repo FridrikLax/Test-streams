@@ -27,7 +27,7 @@ class LinerTransform extends stream.Transform {
 		return {
 			elapsedTime: toMilliseconds(time),
 			nrLines: lines.length,
-			lines: lines,
+//			lines: lines,
 			nrBytes: this._countBytes(lines)
 		}
 	}
