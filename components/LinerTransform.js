@@ -10,6 +10,13 @@ class LinerTransform extends stream.Transform{
 		this._newLineChar = '\r\n';
 		this._lastLineData = null;
 	}
+
+	_countBytes(lines){
+		return lines.reduce((total, line) => {
+			return total + Buffer.byteLength(line, 'utf-8');
+		}, 0);
+	}
+
 	_transform(chunk, nec, next){
 		this._time = process.hrtime(this._time);
 		let data = chunk.toString();
@@ -21,7 +28,8 @@ class LinerTransform extends stream.Transform{
 		this.push({
 			elapsedTime: toMilliseconds(this._time),
 			nrLines: lines.length,
-			lines: lines
+//			lines: lines,
+			nrBytes: this._countBytes(lines)
 		});
 
 		next();
@@ -32,7 +40,8 @@ class LinerTransform extends stream.Transform{
 			this.push({
 				elapsedTime: toMilliseconds(time),
 				nrLines: 1,
-				lines: [this._lastLineData]
+//				lines: [this._lastLineData],
+				nrBytes: this._countBytes([this._lastLineData])
 			})
 		}
 		done();
