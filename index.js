@@ -3,6 +3,7 @@ const fs = require('fs');
 const minimist = require('minimist');
 
 const LinerTransform = require('./components/LinerTransform');
+const AggregatorTransform = require('./components/AggregatorTransform');
 
 let argv = minimist(process.argv.slice(2));
 console.log(argv);
@@ -10,18 +11,9 @@ console.log(argv);
 const source = fs.createReadStream('./logs/log_full.csv');
 //const source = process.stdin;
 
-//source.pipe(process.stdout);
-
-
-
 const liner = new LinerTransform();
+const aggregate = new AggregatorTransform();
 
-source.pipe(liner);
+source.pipe(liner).pipe(aggregate).pipe(process.stdout);
 
 
-liner.on('readable', function () {
-	let line;
-	while (null !== (line = liner.read())) {
-		console.log(line);
-	}
-});
