@@ -16,7 +16,7 @@ describe('Liner', () => {
 	it('the total size of the packages should equal the size of the original file');
 	it('should emit an error if....');
 	it('should handle different newLine characters - this case \\r\\n', (done) => {
-		const source = fs.createReadStream('./logs/log_full.csv');
+		const source = fs.createReadStream('./logs/log_full.csv'); // uses \r\n
 		let stream  = source.pipe(liner);
 
 		let totalLines = 0;
