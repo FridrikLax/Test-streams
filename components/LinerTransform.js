@@ -1,6 +1,6 @@
 'use strict';
 const stream = require('stream');
-const toMilliseconds = require('../utility/time').toMilliseconds;
+const {toMilliseconds} = require('../utility/time');
 
 class LinerTransform extends stream.Transform {
 	constructor ( options) {

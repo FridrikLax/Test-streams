@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('fs');
 const minimist = require('minimist');
-const parseIntArgument = require('./utility/cli').parseIntArgument;
+const {parseIntArgument} = require('./utility/cli');
 
 const LinerTransform = require('./components/LinerTransform');
 const AggregatorTransform = require('./components/AggregatorTransform');
