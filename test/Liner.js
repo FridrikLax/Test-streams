@@ -34,4 +34,19 @@ describe('Liner', () => {
 			done();
 		});
 	});
+	it('should never return an object with zero lines', (done) => {
+		const source = fs.createReadStream('./logs/log_238.csv');
+		let stream  = source.pipe(liner);
+
+		stream.on('readable', function () {
+			let line;
+			while (null !== (line = liner.read())) {
+				assert.notEqual(line.nrLines, 0);
+			}
+		});
+		stream.on('end', ()=>{
+			done();
+		});
+	})
+
 });

@@ -8,6 +8,7 @@ class LinerTransform extends stream.Transform{
 		super({objectMode: true});
 		this._time = process.hrtime();
 		this._newLineChar = '\r\n';
+//		this._newLineChar = '\n';
 		this._lastLineData = null;
 	}
 
@@ -23,7 +24,7 @@ class LinerTransform extends stream.Transform{
 		if (this._lastLineData) data = this._lastLineData + data; // We pre-pend the last line from previous chunk
 
 		let lines = data.split(this._newLineChar);
-		this._lastLineData = lines.splice(lines.length - 1, 1)[0]; // We splice off the last line from current chunk
+		this._lastLineData = (lines.length > 1) ? lines.splice(lines.length - 1, 1)[0] : null; // We splice off the last line from current chunk if there is more than one line
 
 		this.push({
 			elapsedTime: toMilliseconds(this._time),
