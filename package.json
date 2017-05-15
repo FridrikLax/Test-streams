@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Laxdal/Test-streams#readme",
   "dependencies": {
+    "chai": "^3.5.0",
     "minimist": "^1.2.0",
     "numeral": "^2.0.6"
   }

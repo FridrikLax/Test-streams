@@ -5,26 +5,28 @@ const numeral = require('numeral');
 
 
 class Aggregator extends stream.Transform {
-	constructor () {
+	constructor (options) {
+		options = options || {};
+
 		super({objectMode: true});
-		this.startTime = null;
-		this.nrBytes = 0;
-		this.nrChunks = 0;
+		this._startTime = null;
+		this._nrBytes = 0;
+		this._nrChunks = 0;
+		this._verbose = options.verbose;
 	}
 
 	_transform ( chunk, enc, next ) {
-		if(this.startTime === null) this.startTime = process.hrtime();
-
-		this.nrChunks += 1;
-		this.nrBytes += chunk.nrBytes;
+		if(this._startTime === null) this._startTime = process.hrtime();
+		this._nrChunks += 1;
+		this._nrBytes += chunk.nrBytes;
+		if(this._verbose) console.log(chunk);
 		next();
 	}
 
 	_flush ( done ) {
-		let diff = process.hrtime(this.startTime);
+		let diff = process.hrtime(this._startTime);
 		const time = toMilliseconds(diff);
-		const throughput = this.nrBytes / (1024 * time);
-
+		const throughput = this._nrBytes / (1024 * time);
 		const summary = 'Throughput: ' + numeral(throughput).format('0,0.00') + ' kB/ms \n';
 		this.push(summary);
 		done();
