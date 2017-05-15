@@ -10,9 +10,7 @@ describe('Liner', () => {
 	beforeEach(() => {
 		liner = new LinerTransform();
 	});
-	afterEach(() => {
-
-	});
+	afterEach(() => {});
 
 	it('the total size of the packages should equal the size of the original file (after accounting for missing newline characters)', ( done ) => {
 

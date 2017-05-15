@@ -1,9 +1,8 @@
 'use strict';
-//const assert = require('assert');
 const AggregatorTransform = require('../components/AggregatorTransform');
 const LinerTransform = require('../components/LinerTransform');
 const fs = require('fs');
-var assert = require('chai').assert;;
+var assert = require('chai').assert;
 
 describe('Aggregator', () => {
 
@@ -17,12 +16,9 @@ describe('Aggregator', () => {
 		const stats = fs.statSync('./logs/log_238.csv');
 		let stream = source.pipe(liner).pipe(aggregator);
 
-		let totalBytes = 0;
-
 		stream = stream;
 
 		stream.on('readable', function () {
-			console.log('inside readable');
 			let obj;
 			while ( null !== (obj = aggregator.read()) ) {
 			}
@@ -49,7 +45,6 @@ describe('Aggregator', () => {
 		stream = stream;
 
 		stream.on('readable', function () {
-			console.log('inside readable');
 			let result;
 			while ( null !== (result = aggregator.read()) ) {
 				assert.isString(result);
